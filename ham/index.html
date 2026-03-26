@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ham Hero | 无线电爱好者个人主页生成器</title>
+        <title>业余无线电 | Ham Hero</title>
         <link rel="preconnect" href="https://fonts.googleapis.cn">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.cn/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -161,18 +161,18 @@
         }
 
         .hero {
-            min-height: 100vh;
+            min-height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 2rem;
+            padding: 8rem 2rem 4rem;
             position: relative;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 700px;
             opacity: 0;
             transform: translateY(40px);
             animation: heroEnter 1.2s var(--ease-out-expo) forwards;
@@ -197,12 +197,12 @@
             font-size: 0.75rem;
             color: var(--text-secondary);
             letter-spacing: 3px;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             text-transform: uppercase;
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 300;
             line-height: 1.15;
             margin-bottom: 1.5rem;
@@ -211,91 +211,21 @@
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-secondary);
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             line-height: 2;
             font-weight: 300;
             letter-spacing: 1px;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 2px;
-            font-weight: 400;
-            text-decoration: none;
-            transition: all 0.5s var(--ease-out-expo);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .btn-primary {
-            background: var(--text-primary);
-            color: #000000;
-            border: 1px solid var(--text-primary);
-        }
-
-        .btn-primary:hover {
-            background: transparent;
+        .callsign {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 8px;
             color: var(--text-primary);
-            transform: translateY(-2px);
-        }
-
-        .btn-glass {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
-        }
-
-        .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.5s;
-        }
-
-        .scroll-indicator::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            width: 1px;
-            height: 30px;
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3));
-        }
-
-        .scroll-indicator i {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            animation: scrollBounce 2s ease-in-out infinite;
-        }
-
-        @keyframes scrollBounce {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(8px); opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
 
         .container {
@@ -307,7 +237,7 @@
         }
 
         .section {
-            padding: 8rem 0;
+            padding: 5rem 0;
             position: relative;
         }
 
@@ -324,7 +254,7 @@
 
         .section-title {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
         .section-title h2 {
@@ -343,7 +273,7 @@
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
@@ -353,7 +283,7 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 4px;
-            padding: 2.5rem;
+            padding: 2rem;
             transition: all 0.6s var(--ease-out-expo);
             position: relative;
             overflow: hidden;
@@ -417,66 +347,101 @@
             color: var(--text-secondary);
             line-height: 1.8;
             font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .code-block {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .contact-item i {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 4px;
             padding: 1.5rem;
-            margin: 1rem 0;
-            text-align: left;
-            overflow-x: auto;
+            text-align: center;
+            transition: all 0.4s var(--ease-out-expo);
         }
 
-        .code-block code {
-            font-family: 'Space Mono', monospace;
+        .info-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .info-item .label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item .value {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
             font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.4s var(--ease-out-expo);
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
             color: var(--text-primary);
-        }
-
-        .code-block .comment {
-            color: var(--text-secondary);
-        }
-
-        .code-block .keyword {
-            color: #c678dd;
-        }
-
-        .code-block .string {
-            color: #98c379;
-        }
-
-        .feature-list {
-            text-align: left;
-            margin: 1rem 0;
-        }
-
-        .feature-list li {
-            color: var(--text-secondary);
-            line-height: 2;
-            font-size: 0.9rem;
-            list-style: none;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--text-primary);
+            gap: 0.8rem;
         }
 
         footer {
-            padding: 4rem 0;
+            padding: 3rem 0;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             z-index: 1;
+            margin-top: 4rem;
         }
 
         .footer-content {
@@ -532,6 +497,18 @@
             color: var(--text-primary);
         }
 
+        .qrz-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .qrz-link:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             nav {
                 padding: 1rem 1.5rem;
@@ -549,13 +526,18 @@
                 font-size: 2rem;
             }
 
+            .callsign {
+                font-size: 1.8rem;
+                letter-spacing: 4px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
             .footer-content {
                 flex-direction: column;
                 text-align: center;
-            }
-
-            .code-block {
-                font-size: 0.75rem;
             }
         }
 
@@ -612,202 +594,253 @@
 
     <div class="video-container" id="videoContainer">
         <video class="video-bg" muted loop playsinline id="bgVideo" preload="none">
-            <source src="./taikongdianti.mp4" type="video/mp4">
+            <source src="../taikongdianti.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
 
     <body>
         <nav id="navbar">
-            <a href="./index.html" class="nav-logo">HAM HERO</a>
+            <a href="../../index.html" class="nav-logo">DARION</a>
             <ul class="nav-links">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#features">功能</a></li>
-                <li><a href="#quickstart">快速开始</a></li>
-                <li><a href="#config">配置</a></li>
-                <li><a href="#demo">演示</a></li>
+                <li><a href="../../index.html#home">首页</a></li>
+                <li><a href="../../index.html#updates">动态</a></li>
+                <li><a href="../../index.html#projects">项目</a></li>
+                <li><a href="../../index.html#links">链接</a></li>
+                <li><a href="#">无线电</a></li>
+                <li><a href="#qso">日志</a></li>
+                <li><a href="../../index.html#contact">联系</a></li>
+                <li><a href="../../index.html#about">关于</a></li>
             </ul>
         </nav>
 
-        <section class="hero" id="home">
+        <section class="hero">
             <div class="hero-content">
                 <div class="hero-badge">
-                    Open Source Project
+                    Amateur Radio
                 </div>
-                <h1 class="hero-title">Ham Hero</h1>
-                <p class="hero-subtitle">
-                    无线电爱好者个人主页生成器<br>
-                    轻松创建属于你自己的专属个人页面
+                <h1 class="hero-title"><span class="callsign" id="heroCallsign">--</span></h1>
+                <p class="hero-subtitle" id="heroDescription">
+                    --<br>
+                    --
                 </p>
-                <div class="hero-buttons">
-                    <a href="https://github.com/dariondong/Ham_Hero" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="#quickstart" class="btn btn-glass">
-                        快速开始
-                    </a>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <i class="fas fa-chevron-down"></i>
+                <a href="#" class="callsign" id="qrzLink" target="_blank">--</a>
             </div>
         </section>
 
         <div class="container">
-            <section class="section" id="features">
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                返回 Ham Hero
+            </a>
+
+            <section class="section">
                 <div class="section-title">
-                    <h2>功能特点</h2>
-                    <p>FEATURES</p>
+                    <h2>电台信息</h2>
+                    <p>STATION INFO</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="label">呼号</div>
+                        <div class="value" id="infoCallsign">--</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">操作员等级</div>
+                        <div class="value" id="infoLevel">--</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">CQ分区</div>
+                        <div class="value" id="infoCQ">--</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">ITU分区</div>
+                        <div class="value" id="infoITU">--</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">网格坐标</div>
+                        <div class="value" id="infoGrid">--</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">所在地区</div>
+                        <div class="value" id="infoLocation">--</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-title">
+                    <h2>通联频段</h2>
+                    <p>OPERATING BANDS</p>
                 </div>
 
                 <div class="cards-grid">
                     <div class="card">
                         <div class="card-icon">
-                            <i class="fas fa-file-code"></i>
+                            <i class="fas fa-wave-square"></i>
                         </div>
-                        <h3>JSON 配置</h3>
-                        <p>通过修改 JSON 文件即可轻松更新个人信息，无需修改 HTML 代码</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <i class="fas fa-mobile-alt"></i>
+                        <h3>UV 段</h3>
+                        <p>常用频段，适合本地通联</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-wifi"></i>
+                                <span>144 MHz / 430 MHz</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-wifi"></i>
+                                <span>UHF / VHF</span>
+                            </div>
                         </div>
-                        <h3>响应式设计</h3>
-                        <p>完美适配桌面端和移动端，优雅的视觉效果</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3>视频背景</h3>
-                        <p>精美的动态视频背景，提升页面视觉体验</p>
                     </div>
 
                     <div class="card">
                         <div class="card-icon">
                             <i class="fas fa-broadcast-tower"></i>
                         </div>
-                        <h3>无线电专用</h3>
-                        <p>专为业余无线电爱好者设计的页面模板</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
-                        <h3>GitHub Pages</h3>
-                        <p>一键部署到 GitHub Pages，免费托管</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <i class="fas fa-code-branch"></i>
-                        </div>
-                        <h3>开源免费</h3>
-                        <p>完全开源免费使用，欢迎贡献代码</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="quickstart">
-                <div class="section-title">
-                    <h2>快速开始</h2>
-                    <p>QUICK START</p>
-                </div>
-
-                <div class="cards-grid">
-                    <div class="card" style="grid-column: span 2;">
-                        <h3>1. Fork 项目</h3>
-                        <p>点击 GitHub 右上角的 Fork 按钮，fork 本仓库到你的账户</p>
-                    </div>
-
-                    <div class="card" style="grid-column: span 2;">
-                        <h3>2. 修改配置</h3>
-                        <p>在仓库中编辑 <code>ham/data.json</code> 文件，填写你的个人信息</p>
-                        <ul class="feature-list">
-                            <li>呼号 (callsign)</li>
-                            <li>姓名 (name)</li>
-                            <li>操作等级、 CQ/ITU 分区</li>
-                            <li>设备信息等</li>
-                        </ul>
-                    </div>
-
-                    <div class="card" style="grid-column: span 2;">
-                        <h3>3. 启用 GitHub Pages</h3>
-                        <p>在仓库设置中启用 GitHub Pages</p>
-                        <ul class="feature-list">
-                            <li>进入仓库 → Settings → Pages</li>
-                            <li>Source 选择 "main branch"</li>
-                            <li>保存后访问 username.github.io/Ham_Hero/ham</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <section class="section" id="config">
-                <div class="section-title">
-                    <h2>配置文件说明</h2>
-                    <p>CONFIGURATION</p>
-                </div>
-
-                <div class="cards-grid">
-                    <div class="card" style="grid-column: span 2;">
-                        <h3>data.json</h3>
-                        <p>编辑 ham 文件夹下的 data.json 文件来配置你的个人信息</p>
-                        <div class="code-block">
-                            <code>
-{<br>
-&nbsp;&nbsp;<span class="string">"callsign"</span>: <span class="string">"BG7LZQ"</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 呼号</span><br>
-&nbsp;&nbsp;<span class="string">"name"</span>: <span class="string">"Darion"</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 姓名</span><br>
-&nbsp;&nbsp;<span class="string">"operatorLevel"</span>: <span class="string">"A级"</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 操作员等级</span><br>
-&nbsp;&nbsp;<span class="string">"cqZone"</span>: <span class="string">24</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// CQ分区</span><br>
-&nbsp;&nbsp;<span class="string">"ituZone"</span>: <span class="string">44</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// ITU分区</span><br>
-&nbsp;&nbsp;<span class="string">"grid"</span>: <span class="string">"OL51"</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// 网格坐标</span><br>
-&nbsp;&nbsp;<span class="string">"location"</span>: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"country"</span>: <span class="string">"中国"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"province"</span>: <span class="string">"广东"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"city"</span>: <span class="string">"茂名"</span><br>
-&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;<span class="string">"description"</span>: <span class="string">"A级业余无线电操作员"</span>,<br>
-&nbsp;&nbsp;<span class="string">"equipment"</span>: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"handheld"</span>: [<span class="string">"设备1"</span>, <span class="string">"设备2"</span>],<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"antenna"</span>: [<span class="string">"天线1"</span>, <span class="string">"天线2"</span>]<br>
-&nbsp;&nbsp;}<br>
-}
-                            </code>
+                        <h3>短波</h3>
+                        <p>远程通信，探索电离层</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-wave-square"></i>
+                                <span>HF Bands</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-globe-americas"></i>
+                                <span>DX 通联</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="section" id="demo">
+            <section class="section">
                 <div class="section-title">
-                    <h2>演示预览</h2>
-                    <p>DEMO</p>
+                    <h2>常用频率</h2>
+                    <p>COMMON FREQUENCIES</p>
                 </div>
 
                 <div class="cards-grid">
                     <div class="card">
                         <div class="card-icon">
-                            <i class="fas fa-user"></i>
+                            <i class="fas fa-tower-broadcast"></i>
                         </div>
-                        <h3>个人主页</h3>
-                        <p>查看实际效果演示</p>
-                        <a href="./ham/index.html" class="card-link" target="_blank">
-                            查看演示 <i class="fas fa-external-link-alt"></i>
+                        <h3>本地中继</h3>
+                        <p>常用中继频率</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>上行: -- MHz</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>下行: -- MHz</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-minus"></i>
+                                <span>亚音: -- Hz</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3>模拟链路</h3>
+                        <p>常用链路频率</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-wave-square"></i>
+                                <span>--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-walkie-talkie"></i>
+                        </div>
+                        <h3>公网对讲</h3>
+                        <p>全国范围覆盖</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-network-wired"></i>
+                                <span>--</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-mountain"></i>
+                                <span>--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-title">
+                    <h2>设备电台</h2>
+                    <p>EQUIPMENT</p>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-radio"></i>
+                        </div>
+                        <h3>手台</h3>
+                        <p>便携移动通信</p>
+                        <div class="contact-info" id="handheldList">
+                            <div class="contact-item">
+                                <i class="fas fa-walkie-talkie"></i>
+                                <span>--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-satellite-dish"></i>
+                        </div>
+                        <h3>天线</h3>
+                        <p>接收与发射配置</p>
+                        <div class="contact-info" id="antennaList">
+                            <div class="contact-item">
+                                <i class="fas fa-broadcast-tower"></i>
+                                <span>--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="qso">
+                <div class="section-title">
+                    <h2>通联日志</h2>
+                    <p>QSO LOG</p>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                        <h3>通联记录查询</h3>
+                        <p>查看通联历史记录、统计分析</p>
+                        <a href="log.html" class="card-link">
+                            查看日志 <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
 
                     <div class="card">
                         <div class="card-icon">
-                            <i class="fas fa-history"></i>
+                            <i class="fas fa-external-link-alt"></i>
                         </div>
-                        <h3>通联日志</h3>
-                        <p>查看通联记录页面</p>
-                        <a href="./ham/log.html" class="card-link" target="_blank">
-                            查看演示 <i class="fas fa-external-link-alt"></i>
+                        <h3>QRZ 日志</h3>
+                        <p>查看官方 QRZ 日志</p>
+                        <a href="#" class="card-link" id="qrzLink2" target="_blank">
+                            前往 QRZ <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -817,10 +850,13 @@
         <footer>
             <div class="container">
                 <div class="footer-content">
-                    <div class="footer-logo">HAM HERO</div>
+                    <div class="footer-logo">DARION</div>
                     <ul class="footer-links">
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="https://github.com/dariondong/Ham_Hero" target="_blank">GitHub</a></li>
+                        <li><a href="../../index.html#home">首页</a></li>
+                        <li><a href="../../index.html#about">关于</a></li>
+                        <li><a href="https://github.com/dariondong">GitHub</a></li>
+                        <li><a href="https://gitcode.com/DarionDong">GitCode</a></li>
+                        <li><a href="https://gitee.com/dariondong">Gitee</a></li>
                     </ul>
                 </div>
                 <div class="footer-copy">
@@ -830,8 +866,63 @@
         </footer>
 
         <script>
+            let hamData = null;
+
+            async function loadData() {
+                try {
+                    const response = await fetch('./data.json');
+                    hamData = await response.json();
+                    updatePage();
+                } catch (error) {
+                    console.error('加载数据失败:', error);
+                }
+            }
+
+            function updatePage() {
+                if (!hamData) return;
+
+                document.getElementById('heroCallsign').textContent = hamData.callsign;
+                document.getElementById('heroDescription').innerHTML = hamData.description.replace(/\n/g, '<br>');
+                document.getElementById('qrzLink').textContent = hamData.callsign;
+                document.getElementById('qrzLink').href = hamData.social.qrz;
+                document.getElementById('qrzLink2').href = hamData.social.qrz;
+
+                document.getElementById('infoCallsign').textContent = hamData.callsign;
+                document.getElementById('infoLevel').textContent = hamData.operatorLevel;
+                document.getElementById('infoCQ').textContent = 'CQ Zone ' + hamData.cqZone;
+                document.getElementById('infoITU').textContent = 'ITU Zone ' + hamData.ituZone;
+                document.getElementById('infoGrid').textContent = hamData.grid;
+                document.getElementById('infoLocation').textContent = hamData.location.province + ' ' + hamData.location.city;
+
+                const handheldList = document.getElementById('handheldList');
+                handheldList.innerHTML = hamData.equipment.handheld.map(item => `
+                    <div class="contact-item">
+                        <i class="fas fa-walkie-talkie"></i>
+                        <span>${item}</span>
+                    </div>
+                `).join('');
+
+                const antennaList = document.getElementById('antennaList');
+                antennaList.innerHTML = hamData.equipment.antenna.map(item => `
+                    <div class="contact-item">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>${item}</span>
+                    </div>
+                `).join('');
+            }
+
             const navbar = document.getElementById('navbar');
             const videoContainer = document.getElementById('videoContainer');
+            const pageLoader = document.getElementById('pageLoader');
+            const bgVideo = document.getElementById('bgVideo');
+
+            window.addEventListener('load', function() {
+                loadData();
+                setTimeout(function() {
+                    pageLoader.classList.add('hidden');
+                    bgVideo.play();
+                }, 800);
+            });
 
             window.addEventListener('scroll', function() {
                 const scrollY = window.scrollY;
@@ -855,16 +946,6 @@
                         });
                     }
                 });
-            });
-
-            document.addEventListener('DOMContentLoaded', function() {
-                const pageLoader = document.getElementById('pageLoader');
-                const bgVideo = document.getElementById('bgVideo');
-                
-                setTimeout(function() {
-                    pageLoader.classList.add('hidden');
-                    bgVideo.play();
-                }, 800);
             });
         </script>
     </body>

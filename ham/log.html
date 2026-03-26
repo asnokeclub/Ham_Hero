@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>通联日志 | Ham Hero</title>
+        <link rel="preconnect" href="https://fonts.googleapis.cn">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.cn/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #888888;
+            --accent-color: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --glass-blur: blur(20px);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: opacity 0.8s var(--ease-out-expo), transform 8s ease-out;
+        }
+
+        .video-container.scrolled .video-bg {
+            opacity: 0.3;
+            transform: scale(1.05);
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0.5) 0%,
+                rgba(0, 0, 0, 0.7) 50%,
+                rgba(0, 0, 0, 0.9) 100%
+            );
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.6s var(--ease-out-expo);
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 3rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-logo {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 6px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.4s var(--ease-out-expo);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--text-primary);
+            transition: all 0.4s var(--ease-out-expo);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 3rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: heroEnter 1.2s var(--ease-out-expo) forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes heroEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            line-height: 1.15;
+            color: var(--text-primary);
+            letter-spacing: 4px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1));
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 2.5rem;
+            transition: all 0.6s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s var(--ease-out-expo);
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .card:hover .card-icon {
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .card-link:hover {
+            color: var(--text-primary);
+            gap: 0.8rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            letter-spacing: 4px;
+            color: var(--text-primary);
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 400;
+            text-decoration: none;
+            transition: all 0.5s var(--ease-out-expo);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: #000000;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .log-table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .log-table th,
+        .log-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .log-table th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .log-table td {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .log-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+        }
+
+        .log-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .callsign {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .mode-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .signal-rst {
+            font-family: 'Space Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.4s var(--ease-out-expo);
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+            gap: 0.8rem;
+        }
+
+        footer {
+            padding: 3rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading i {
+            font-size: 1.5rem;
+            animation: fa-spin 2s infinite linear;
+        }
+
+        @keyframes fa-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            nav.scrolled {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .log-table {
+                font-size: 0.75rem;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .log-table th,
+            .log-table td {
+                padding: 0.6rem;
+                min-width: 80px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">LOADING</div>
+        </div>
+    </div>
+
+    <div class="video-container" id="videoContainer">
+        <video class="video-bg" muted loop playsinline id="bgVideo" preload="none">
+            <source src="../taikongdianti.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <body>
+        <nav id="navbar">
+            <a href="../index.html" class="nav-logo">DARION</a>
+            <ul class="nav-links">
+                <li><a href="../index.html#home">首页</a></li>
+                <li><a href="../index.html#updates">动态</a></li>
+                <li><a href="../index.html#projects">项目</a></li>
+                <li><a href="../index.html#links">链接</a></li>
+                <li><a href="index.html">无线电</a></li>
+                <li><a href="../index.html#contact">联系</a></li>
+                <li><a href="../index.html#about">关于</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    QSO Log
+                </div>
+                <h1 class="hero-title">通联日志</h1>
+            </div>
+        </section>
+
+        <div class="container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                返回无线电页面
+            </a>
+
+            <section class="section">
+                <div class="cards-grid" style="margin-bottom: 2rem;">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <h3>QRZ 日志</h3>
+                        <p>查看官方 QRZ 日志</p>
+                        <a href="https://www.qrz.com/db/" class="card-link" target="_blank">
+                            前往 QRZ <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="stats-bar" id="statsBar">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalQsos">0</div>
+                        <div class="stat-label">总通联数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCallsigns">0</div>
+                        <div class="stat-label">不同呼号</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalBands">0</div>
+                        <div class="stat-label">使用频段</div>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchCallsign" placeholder="搜索呼号...">
+                    <input type="text" class="search-input" id="searchMode" placeholder="搜索模式 (FM/SSB)...">
+                    <button class="btn btn-primary" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                        搜索
+                    </button>
+                    <button class="btn btn-glass" id="resetBtn">
+                        <i class="fas fa-redo"></i>
+                        重置
+                    </button>
+                </div>
+
+                <div class="loading" id="loading">
+                    <i class="fas fa-circle-notch"></i>
+                    <p style="margin-top: 1rem;">加载中...</p>
+                </div>
+
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>呼号</th>
+                            <th>频率</th>
+                            <th>模式</th>
+                            <th>信号</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                    </tbody>
+                </table>
+
+                <div class="no-data" id="noData" style="display: none;">
+                    <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <p>暂无通联记录</p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">DARION</div>
+                    <ul class="footer-links">
+                        <li><a href="../index.html#home">首页</a></li>
+                        <li><a href="../index.html#about">关于</a></li>
+                        <li><a href="https://github.com/dariondong">GitHub</a></li>
+                        <li><a href="https://gitcode.com/DarionDong">GitCode</a></li>
+                        <li><a href="https://gitee.com/dariondong">Gitee</a></li>
+                    </ul>
+                </div>
+                <div class="footer-copy">
+                    © 2026 DARION — IMSHITO.EU.ORG
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            const navbar = document.getElementById('navbar');
+            const videoContainer = document.getElementById('videoContainer');
+            const pageLoader = document.getElementById('pageLoader');
+            const bgVideo = document.getElementById('bgVideo');
+
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    bgVideo.play();
+                }, 800);
+            });
+
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                
+                if (scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                    videoContainer.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    videoContainer.classList.remove('scrolled');
+                }
+            });
+
+            let allLogs = [];
+
+            async function loadLogs() {
+                document.getElementById('pageLoader').classList.add('hidden');
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('noData').style.display = 'none';
+                
+                try {
+                    const timestamp = new Date().getTime();
+                    const response = await fetch(`log.csv?t=${timestamp}`);
+                    const text = await response.text();
+                    const lines = text.trim().split('\n');
+                    
+                    allLogs = [];
+                    for (let i = 1; i < lines.length; i++) {
+                        const values = lines[i].split(',');
+                        if (values.length >= 10) {
+                            allLogs.push({
+                                date: values[0],
+                                time: values[1],
+                                callsign: values[2],
+                                freq: values[3],
+                                mode: values[4],
+                                rst: values[5],
+                                power: values[6],
+                                radio: values[7],
+                                antenna: values[8],
+                                remark: values[9]
+                            });
+                        }
+                    }
+                    
+                    allLogs.sort((a, b) => {
+                        const parseDate = (d, t) => {
+                            const parts = d.split('/');
+                            const y = parseInt(parts[0]);
+                            const m = parseInt(parts[1]);
+                            const day = parseInt(parts[2]);
+                            const timeParts = t.split(':');
+                            let h = parseInt(timeParts[0]);
+                            let min = parseInt(timeParts[1]);
+                            if (isNaN(h)) h = 0;
+                            if (isNaN(min)) min = 0;
+                            return y * 1000000 + m * 10000 + day * 100 + h * 60 + min;
+                        };
+                        const dateA = parseDate(a.date, a.time);
+                        const dateB = parseDate(b.date, b.time);
+                        return dateB - dateA;
+                    });
+                    
+                    updateStats();
+                    renderTable(allLogs);
+                    document.getElementById('loading').style.display = 'none';
+                } catch (error) {
+                    console.error('加载日志失败:', error);
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('noData').style.display = 'block';
+                }
+            }
+
+            function updateStats() {
+                const totalQsos = allLogs.length;
+                const uniqueCallsigns = [...new Set(allLogs.map(log => log.callsign))].length;
+                const freqs = allLogs.map(log => log.freq.split('MHz')[0] + 'MHz');
+                const uniqueBands = [...new Set(freqs)].length;
+                
+                document.getElementById('totalQsos').textContent = totalQsos;
+                document.getElementById('totalCallsigns').textContent = uniqueCallsigns;
+                document.getElementById('totalBands').textContent = uniqueBands;
+            }
+
+            function renderTable(logs) {
+                const tbody = document.getElementById('logTableBody');
+                const noData = document.getElementById('noData');
+                
+                if (logs.length === 0) {
+                    tbody.innerHTML = '';
+                    noData.style.display = 'block';
+                    return;
+                }
+                
+                noData.style.display = 'none';
+                tbody.innerHTML = logs.map((log, index) => `
+                    <tr onclick="window.location.href='qso.html?date=${encodeURIComponent(log.date)}&time=${encodeURIComponent(log.time)}&callsign=${encodeURIComponent(log.callsign)}&freq=${encodeURIComponent(log.freq)}&mode=${encodeURIComponent(log.mode)}&rst=${encodeURIComponent(log.rst)}&power=${encodeURIComponent(log.power)}&radio=${encodeURIComponent(log.radio)}&antenna=${encodeURIComponent(log.antenna)}&remark=${encodeURIComponent(log.remark)}'">
+                        <td>${log.date}</td>
+                        <td><span class="callsign">${log.callsign}</span></td>
+                        <td>${log.freq}</td>
+                        <td><span class="mode-tag">${log.mode}</span></td>
+                        <td><span class="signal-rst">${log.rst}</span></td>
+                    </tr>
+                `).join('');
+            }
+
+            function searchLogs() {
+                const callsignQuery = document.getElementById('searchCallsign').value.toLowerCase();
+                const modeQuery = document.getElementById('searchMode').value.toLowerCase();
+                
+                const filtered = allLogs.filter(log => {
+                    const matchCallsign = log.callsign.toLowerCase().includes(callsignQuery);
+                    const matchMode = log.mode.toLowerCase().includes(modeQuery);
+                    return matchCallsign && matchMode;
+                });
+                
+                renderTable(filtered);
+            }
+
+            function resetSearch() {
+                document.getElementById('searchCallsign').value = '';
+                document.getElementById('searchMode').value = '';
+                renderTable(allLogs);
+            }
+
+            document.getElementById('searchBtn').addEventListener('click', searchLogs);
+            document.getElementById('resetBtn').addEventListener('click', resetSearch);
+            
+            document.getElementById('searchCallsign').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') searchLogs();
+            });
+            document.getElementById('searchMode').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') searchLogs();
+            });
+
+            loadLogs();
+        </script>
+    </body>
+</html>

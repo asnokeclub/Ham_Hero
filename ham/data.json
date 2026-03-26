@@ -1,0 +1,58 @@
+{
+    "callsign": "BG7AAA",
+    "name": "Darion",
+    "operatorLevel": "A级",
+    "cqZone": 24,
+    "ituZone": 44,
+    "grid": "OL51",
+    "location": {
+        "country": "中国",
+        "province": "广东",
+        "city": "茂名"
+    },
+    "description": "A级业余无线电操作员 | 追求通联的乐趣，期待空中相遇",
+    "bands": {
+        "uv": {
+            "name": "UV段",
+            "description": "常用频段，适合本地通联",
+            "frequencies": ["144 MHz", "430 MHz"]
+        },
+        "hf": {
+            "name": "短波",
+            "description": "远程通信，探索电离层",
+            "frequencies": ["HF Bands"]
+        }
+    },
+    "repeaters": [
+        {
+            "name": "高州中继",
+            "description": "高州业余无线电中继台",
+            "uplink": "434.125 MHz",
+            "downlink": "439.125 MHz",
+            "tone": "88.5 Hz"
+        },
+        {
+            "name": "粤西业余无线电链路",
+            "description": "模拟链路覆盖粤西地区"
+        }
+    ],
+    "equipment": {
+        "handheld": [
+            "森海克斯 8600PRO",
+            "泉盛 UVK6"
+        ],
+        "antenna": [
+            "老鹰 771",
+            "屋顶五单元八木天线 × 2"
+        ]
+    },
+    "social": {
+        "qrz": "https://www.qrz.com/db/BG7LZQ",
+        "email": "imshito@imshito.eu.org"
+    },
+    "website": {
+        "title": "Ham Hero - 无线电爱好者个人主页",
+        "version": "1.0.0",
+        "built": "20260326"
+    }
+}
