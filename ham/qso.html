@@ -641,39 +641,39 @@
                 <div class="qso-info">
                     <div class="info-item">
                         <span class="info-label">日期</span>
-                        <span class="info-value" id="date">2026-01-15</span>
+                        <span class="info-value" id="date">--</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">时间</span>
-                        <span class="info-value" id="time">08:30</span>
+                        <span class="info-value" id="time">--</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">频率</span>
-                        <span class="info-value freq" id="freq">439.125 MHz</span>
+                        <span class="info-value freq" id="freq">--</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">模式</span>
-                        <span class="info-value" id="mode">FM</span>
+                        <span class="info-value" id="modeInfo">FM</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">信号报告</span>
-                        <span class="info-value rst" id="rst">59</span>
+                        <span class="info-value rst" id="rst">--</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">功率</span>
-                        <span class="info-value power" id="power">5W</span>
+                        <span class="info-value power" id="power">--</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">设备</span>
-                        <span class="info-value" id="radio">森海克斯8600PRO</span>
+                        <span class="info-value" id="radio">--</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">天线</span>
-                        <span class="info-value" id="antenna">老鹰771</span>
+                        <span class="info-value" id="antenna">--</span>
                     </div>
                     <div class="info-item info-full">
                         <span class="info-label">备注</span>
-                        <span class="info-value" id="remark">高州中继测试通联</span>
+                        <span class="info-value" id="remark">--</span>
                     </div>
                 </div>
 
@@ -682,7 +682,7 @@
                         <i class="fas fa-external-link-alt"></i>
                         在 QRZ 查看该呼号
                     </a>
-                    <button class="btn share-btn" onclick="toggleShare()">
+                    <button class="share-btn" onclick="toggleShare()">
                         <i class="fas fa-share-alt"></i>
                         分享格式
                     </button>
@@ -710,10 +710,6 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-logo">HAM HERO</div>
-                    <ul class="footer-links">
-                        <li><a href="./index.html">首页</a></li>
-                        <li><a href="../index.html">项目介绍</a></li>
-                    </ul>
                 </div>
                 <div class="footer-copy">
                     The pages Power By <a href="https://github.com/dariondong/Ham_Hero" target="_blank">Ham_Hero</a> with <a href="https://www.theez.top/" target="_blank">BG7LZQ</a>
@@ -732,6 +728,27 @@
                 } catch (error) {
                     console.error('加载数据失败:', error);
                     updateQSO();
+                }
+            }
+
+            function updateQSO() {
+                document.getElementById('callsign').textContent = getQueryParam('callsign') || '-';
+                document.getElementById('mode').textContent = getQueryParam('mode') || 'FM';
+                document.getElementById('modeInfo').textContent = getQueryParam('mode') || 'FM';
+                document.getElementById('date').textContent = getQueryParam('date') || '-';
+                document.getElementById('time').textContent = getQueryParam('time') || '-';
+                document.getElementById('freq').textContent = getQueryParam('freq') || '-';
+                document.getElementById('rst').textContent = getQueryParam('rst') || '-';
+                document.getElementById('power').textContent = getQueryParam('power') || '-';
+                document.getElementById('radio').textContent = getQueryParam('radio') || '-';
+                document.getElementById('antenna').textContent = getQueryParam('antenna') || '-';
+                document.getElementById('remark').textContent = getQueryParam('remark') || '-';
+
+                const callsign = getQueryParam('callsign');
+                const myCallsign = hamData ? hamData.callsign : '--';
+                if (callsign) {
+                    document.getElementById('qrzLink').href = 'https://www.qrz.com/db/' + callsign;
+                    document.getElementById('qsoWith').textContent = myCallsign + ' 与 ' + callsign + ' 通联';
                 }
             }
 
@@ -765,26 +782,6 @@
                 return urlParams.get(param);
             }
 
-            function updateQSO() {
-                document.getElementById('callsign').textContent = getQueryParam('callsign') || '-';
-                document.getElementById('mode').textContent = getQueryParam('mode') || 'FM';
-                document.getElementById('date').textContent = getQueryParam('date') || '-';
-                document.getElementById('time').textContent = getQueryParam('time') || '-';
-                document.getElementById('freq').textContent = getQueryParam('freq') || '-';
-                document.getElementById('rst').textContent = getQueryParam('rst') || '-';
-                document.getElementById('power').textContent = getQueryParam('power') || '-';
-                document.getElementById('radio').textContent = getQueryParam('radio') || '-';
-                document.getElementById('antenna').textContent = getQueryParam('antenna') || '-';
-                document.getElementById('remark').textContent = getQueryParam('remark') || '-';
-
-                const callsign = getQueryParam('callsign');
-                const myCallsign = hamData ? hamData.callsign : '--';
-                if (callsign) {
-                    document.getElementById('qrzLink').href = 'https://www.qrz.com/db/' + callsign;
-                    document.getElementById('qsoWith').textContent = myCallsign + ' 与 ' + callsign + ' 通联';
-                }
-            }
-
             function generateShareText() {
                 const date = getQueryParam('date') || '-';
                 const time = getQueryParam('time') || '-';
@@ -793,8 +790,8 @@
                 const mode = getQueryParam('mode') || 'FM';
                 const rst = getQueryParam('rst') || '-';
                 const power = getQueryParam('power') || '-';
-                const remark = getQueryParam('remark') || '-';
-                return `QSO with ${callsign}\nDate: ${date} ${time}\nFreq: ${freq}\nMode: ${mode}\nRST: ${rst}\nPower: ${power}\nQTH: ${hamData ? hamData.callsign : '--'}\n73!`;
+                const myCallsign = hamData ? hamData.callsign : '--';
+                return `QSO with ${callsign}\nDate: ${date} ${time}\nFreq: ${freq}\nMode: ${mode}\nRST: ${rst}\nPower: ${power}\nQTH: ${myCallsign}\n73!`;
             }
 
             function toggleShare() {
@@ -858,8 +855,9 @@
                         useCORS: true,
                         logging: false
                     }).then(canvas => {
+                        const myCallsign = hamData ? hamData.callsign : 'Ham';
                         const link = document.createElement('a');
-                        link.download = 'QSO_' + (getQueryParam('callsign') || (hamData ? hamData.callsign : '--')) + '.png';
+                        link.download = 'QSO_' + (getQueryParam('callsign') || myCallsign) + '.png';
                         link.href = canvas.toDataURL('image/png');
                         link.click();
 
