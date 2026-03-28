@@ -1,16 +1,16 @@
 {
-    "callsign": "BG7AAA",
-    "name": "Darion",
-    "operatorLevel": "A级",
+    "callsign": "BY9027SWL",
+    "name": "Asnoke",
+    "operatorLevel": "备考",
     "cqZone": 24,
     "ituZone": 44,
-    "grid": "OL51",
+    "grid": "OM44lf",
     "location": {
         "country": "中国",
-        "province": "广东",
-        "city": "茂名"
+        "province": "陕西",
+        "city": "西安"
     },
-    "description": "A级业余无线电操作员 | 追求通联的乐趣，期待空中相遇",
+    "description": "备考中的业余无线电操作员 | 追求通联的乐趣，期待空中相遇",
     "bands": {
         "uv": {
             "name": "UV段",
